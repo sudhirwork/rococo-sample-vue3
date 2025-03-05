@@ -6,7 +6,9 @@
       </q-card-section>
       <q-card-section>
         <q-form @submit.prevent="onSubmit">
-          <q-alert v-if="loginError" color="negative">{{ loginError }}</q-alert>
+          <q-banner v-if="loginError" class="bg-red-2 text-negative q-mb-md">{{
+            loginError
+          }}</q-banner>
 
           <q-input
             v-model="email"
@@ -45,9 +47,7 @@
       <q-card-section class="text-center">
         <p>
           Don't have an account?
-          <router-link :to="{ name: 'signup' }"
-            ><span class="text-none">Register</span></router-link
-          >
+          <router-link :to="{ name: 'signup' }" class="no-underline">Register</router-link>
         </p>
       </q-card-section>
     </q-card>
@@ -95,11 +95,11 @@ const onSubmit = async () => {
 
     router.push('/dashboard') // Redirect to dashboard
   } catch (error) {
-    Notify.create({
-      type: 'negative',
-      message: 'Login failed',
-    })
-    loginError.value = error.response?.data?.message || 'Login failed'
+    // Notify.create({
+    //   type: 'negative',
+    //   message: 'Login failed',
+    // })
+    loginError.value = error.response?.data?.error || 'Login failed'
   } finally {
     loading.value = false
   }

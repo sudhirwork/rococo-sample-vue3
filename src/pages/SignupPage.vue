@@ -43,7 +43,7 @@
       <q-card-section class="text-center">
         <p>
           Already have an account?
-          <router-link :to="{ name: 'signin' }"><span class="text-none">Login</span></router-link>
+          <router-link :to="{ name: 'signin' }" class="no-underline">Login</router-link>
         </p>
       </q-card-section>
     </q-card>
@@ -71,7 +71,7 @@ const onSubmit = async () => {
   signupError.value = ''
   loading.value = true
   try {
-    const response = await axios.post(`${BACKEND_URL}/signup`, {
+    await axios.post(`${BACKEND_URL}/signup`, {
       email: email.value,
       firstname: firstname.value,
       lastname: lastname.value,
@@ -81,20 +81,13 @@ const onSubmit = async () => {
       type: 'positive',
       message: 'Signup successful. You can check your mailbox to verify your email',
     })
-
-    const token = response.data.access_token
-    const user = response.data.user
-    localStorage.setItem('authToken', token)
-    authStore.setData({ user, token })
-
-    router.push('/dashboard')
   } catch (error) {
     const message = error.response?.data?.error || 'Signup failed'
 
-    Notify.create({
-      type: 'negative',
-      message,
-    })
+    // Notify.create({
+    //   type: 'negative',
+    //   message,
+    // })
     signupError.value = message
   } finally {
     loading.value = false

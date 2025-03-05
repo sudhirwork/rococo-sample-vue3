@@ -2,7 +2,7 @@
   <q-page class="flex flex-center bg-grey-2">
     <q-card class="q-pa-md q-gutter-md" style="width: 400px; max-width: 90vw">
       <q-card-section>
-        <div class="text-h6 text-center">Reset Password</div>
+        <div class="text-h6 text-center">{{ title }}</div>
       </q-card-section>
       <q-card-section>
         <q-form @submit.prevent="onSubmit">
@@ -29,7 +29,7 @@
           <q-btn
             type="submit"
             color="primary"
-            label="Change Password"
+            :label="title"
             class="full-width"
             :loading="loading"
           />
@@ -64,9 +64,16 @@ const loading = ref(false)
 const route = useRoute()
 const router = useRouter()
 
+const title = route.path === '/reset-password' ? 'Reset Password' : 'Set Password'
+
 onMounted(() => {
   const queryParams = route.query
   token.value = queryParams.token
+
+  if (token.value == undefined) {
+    router.push({ name: 'signin' })
+    return
+  }
 
   router.replace({ path: route.path, query: {} })
 })
@@ -89,7 +96,7 @@ const onSubmit = async () => {
   } catch (error) {
     Notify.create({
       type: 'negative',
-      message: 'Password reset failed',
+      message: error.message || 'Password reset failed. Try again.',
     })
   } finally {
     loading.value = false

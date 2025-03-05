@@ -20,14 +20,14 @@ const routes = [
         component: () => import('pages/ForgetPasswordPage.vue'),
       },
       {
-        name: 'forget-password',
-        path: '/forget-password',
-        component: () => import('pages/ForgetPasswordPage.vue'),
-      },
-      {
         name: 'reset-password',
         path: '/reset-password',
-        component: () => import('src/pages/ResetpasswordPage.vue'),
+        component: () => import('src/pages/ResetPasswordPage.vue'),
+      },
+      {
+        name: 'set-password',
+        path: '/set-password',
+        component: () => import('src/pages/ResetPasswordPage.vue'),
       },
       {
         name: 'dashboard',
